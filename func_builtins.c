@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "main.h"
 
 /**
  * set_env - Set or update an environment variable
