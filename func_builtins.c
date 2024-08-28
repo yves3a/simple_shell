@@ -99,7 +99,7 @@ int unset_env(const char *name)
  *
  * Return: 2 on error, else exits with the provided exit code
  */
-int exit_handler(s_shell_t *ptr, void (*cleanup)(const char *format, ...))
+int exit_handler(shell_t *ptr, void (*cleanup)(const char *format, ...))
 {
 	const char *code_status = (ptr->sub_command) ? ptr->sub_command[1] : NULL;
 	int code_exitor = ptr->code_exiter;
@@ -132,7 +132,7 @@ int exit_handler(s_shell_t *ptr, void (*cleanup)(const char *format, ...))
  *
  * Return: 0 on success, else 2 on error
  */
-int cd_handler(s_shell_t *ptr)
+int cd_handler(shell_t *ptr)
 {
 	char path[PATH_SIZE], print_work_dir[BUFF_SIZE];
 	const char *name_of_path = ptr->sub_command[1];

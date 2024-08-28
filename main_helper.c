@@ -5,9 +5,9 @@
  *
  * Return: Pointer to the initialized shell data structure
  */
-s_shell_t *shell_init(void)
+shell_t *shell_init(void)
 {
-	s_shell_t *ptr = malloc(sizeof(s_shell_t));
+	shell_t *ptr = malloc(sizeof(shell_t));
 
 	if (ptr == NULL)
 	{
