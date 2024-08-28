@@ -1,5 +1,5 @@
-#ifndef S_SHELL_H
-#define S_SHELL_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <errno.h>
 #include <fcntl.h>
@@ -161,7 +161,7 @@ typedef struct shell
 	const char *program_name;
 	size_t counter_of_cmd;
 	int code_exiter;
-} s_shell_t;
+} shell_t;
 
 s_shell_t *shell_init(void);
 void handle_signalint(int signum);
