@@ -1,2 +1,2 @@
-simple shell built by Yves IRAKOZE and Blaise Innocent IZERE.
+This is a simple shell built by Yves IRAKOZE and Blaise Innocent IZERE.
 it works exactly like "sh" shell.
