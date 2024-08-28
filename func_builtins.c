@@ -31,7 +31,7 @@ int set_env(const char *name, const char *val, int over_write)
 			return (0); /* Variable exists, and overwrite is false */
 	}
 
-	/* Calculate the length and allocate memory for the new variable */
+	/* Calculates the lengths and allocates memory for the new variables */
 	len = str_len(name) + str_len(val) + 2;
 	var_of_env = malloc(len);
 	if (var_of_env == NULL)
@@ -67,7 +67,7 @@ int unset_env(const char *name)
 {
 	size_t index, j, len;
 	/* Validate variable name */
-	if (name == NULL || name[0] == '\0' || str_chr(name, '=') != NULL)
+		if (name == NULL || name[0] == '\0' || str_chr(name, '=') != NULL)
 	{
 		fprintf(stderr, "Invalid variable name: %s\n", name);
 		return (1);
