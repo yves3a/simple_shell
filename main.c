@@ -1,8 +1,9 @@
-#include "s_shell.h"
+#include "shell.h"
 
 /**
  * main -Entry point for the shell program
  * @argc: Number of command line arguments
+ *
  * @argv: Array of command line arguments
  *
  * Return: 0 on success, or the exit code of
@@ -13,7 +14,7 @@ int main(int argc, char *argv[])
 {
 	size_t lenght = 0;
 	ssize_t read_num = 0;
-	s_shell_t *ptr = NULL;
+	shell_t *ptr = NULL;
 
 	/*Handle signal interrupts (e.g:Ctrl + C) by setting a custom signal handler*/
 	signal(SIGINT, handle_signalint);
@@ -51,14 +52,21 @@ int main(int argc, char *argv[])
 		{
 			if (isatty(STDIN_FILENO))
 				printf("exit\n");
-			exit_handler(ptr, free_multipler); /*clean up and exit the shell*/
-		}
-
-		/* Parse the input line and execute the command */
-		ptr->code_exiter = line_parsing(ptr);
-		safe_free(ptr->line); /*Free the memory allocated fo the input*/
-	}
-
-	/* Return the exit code from the last executed command */
+exit_handler(ptr, free_multipler);
+/*
+ * clean up and
+ * exit the shell
+ */
+}
+/*
+ * Parse the input line
+ * and
+ * execute the command
+ */
+ptr->code_exiter = line_parsing(ptr);
+safe_free(ptr->line);
+/*Free the memory allocated for the inputs*/
+}
+/* Returns the exit code from the lasts executed commands */
 	return (ptr->code_exiter);
 }
