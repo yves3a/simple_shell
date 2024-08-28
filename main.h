@@ -163,29 +163,29 @@ typedef struct shell
 	int code_exiter;
 } shell_t;
 
-s_shell_t *shell_init(void);
+shell_t *shell_init(void);
 void handle_signalint(int signum);
 
 /* builtin handlers */
 
 int unset_env(const char *name);
-int cd_handler(s_shell_t *ptr);
+int cd_handler(shell_t *ptr);
 int set_env(const char *name, const char *value, int over_write);
-int builtin_handler(s_shell_t *ptr);
-int exit_handler(s_shell_t *ptr, void (*cleanup)(const char *format, ...));
+int builtin_handler(shell_t *ptr);
+int exit_handler(shell_t *ptr, void (*cleanup)(const char *format, ...));
 
 /* parsers and executors */
 
 char *rec_operator(char *str);
 char *comment_handler(char *cmd);
-int line_parsing(s_shell_t *ptr);
-int command_executor(const char *pathname, s_shell_t *ptr);
-int parsing_and_execute(s_shell_t *ptr, size_t i);
-int handler_of_path(s_shell_t *ptr);
-int print_command_not_found(s_shell_t *ptr);
-void file_as_input_handler(const char *filename, s_shell_t *ptr);
-char **variables_handler(s_shell_t *ptr);
-int parsing(s_shell_t *ptr);
-void parsing_helper(s_shell_t *ptr, size_t index);
+int line_parsing(shell_t *ptr);
+int command_executor(const char *pathname, shell_t *ptr);
+int parsing_and_execute(shell_t *ptr, size_t i);
+int handler_of_path(shell_t *ptr);
+int print_command_not_found(shell_t *ptr);
+void file_as_input_handler(const char *filename, shell_t *ptr);
+char **variables_handler(shell_t *ptr);
+int parsing(shell_t *ptr);
+void parsing_helper(shell_t *ptr, size_t index);
 
 #endif /* SHELL_H */
