@@ -8,7 +8,7 @@
  *
  * Return: Exit code for the command executed or NOT_BUILTIN if not a built-in.
  */
-int builtin_func_handler(s_shell_t *ptr)
+int builtin_func_handler(shell_t *ptr)
 {
 	if (!str_cmp(ptr->sub_command[0], "env") ||
 		!str_cmp(ptr->sub_command[0], "printenv"))
