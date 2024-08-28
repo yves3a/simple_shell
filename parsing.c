@@ -1,17 +1,19 @@
-#include "s_shell.h"
+#include "shell.h"
 
 /**
  * line_parsing - Parses the received command line.
  * @ptr: Contains all the data relevant to the shell's operation.
  *
- * Description: This function processes the command line before handing it
- * over to the executor.It skips empty lines and comments,
+ * Description: This function processes
+ * the command line before handing it
+ * over to the executor.
+ * It skips empty lines and comments,
  * handles tokenization,
  * and calls the executor if the command is valid.
  *
  * Return: The exit code of the executed program, or -1 if an error occurs.
  */
-int line_parsing(s_shell_t *ptr)
+int line_parsing(shell_t *ptr)
 {
 	size_t index;
 
@@ -68,7 +70,7 @@ int line_parsing(s_shell_t *ptr)
  *
  * Return: The exit code of the executed program.
  */
-int parsing(s_shell_t *ptr)
+int parsing(shell_t *ptr)
 {
 	ssize_t index, set_off;
 	char *cur_cmd = NULL, *oper = NULL;
@@ -79,17 +81,17 @@ int parsing(s_shell_t *ptr)
 		oper = rec_operator(ptr->commands[index]);
 		if (oper != NULL)
 		{
-			set_off = str_spn(ptr->commands[index], oper);
-			/* Extract the command before the operator */
-			cur_cmd = strn_dup(ptr->commands[index], set_off);
+	set_off = str_spn(ptr->commands[index], oper);
+	/* Extract the command before the operator */
+	cur_cmd = strn_dup(ptr->commands[index], set_off);
 			if (cur_cmd == NULL)
 				return (0);
 			ptr->sub_command = str_tok(cur_cmd, NULL);
 			free_safely(cur_cmd);
 			if (ptr->sub_command == NULL)
 				return (0);
-			ptr->sub_command = variables_handler(ptr);
-			parsing_helper(ptr, index);
+		ptr->sub_command = variables_handler(ptr);
+		parsing_helper(ptr, index);
 
 			/* Prepare the next command after the operator */
 			next_cmd_temp = str_dup(&ptr->commands[index][set_off + 2]);
@@ -124,7 +126,7 @@ int parsing(s_shell_t *ptr)
  *
  * Return: The exit code of the executed program.
  */
-int parsing_and_execute(s_shell_t *ptr, size_t i)
+int parsing_and_execute(shell_t *ptr, size_t i)
 {
 	/* Tokenize the sub-commands */
 	ptr->sub_command = str_tok(ptr->commands[i], NULL);
@@ -154,7 +156,7 @@ int parsing_and_execute(s_shell_t *ptr, size_t i)
  * commands executed with the PATH variable. It is called by parse and
  * parse_and_execute to aid in processing commands.
  */
-void parsing_helper(s_shell_t *ptr, size_t i)
+void parsing_helper(shell_t *ptr, size_t i)
 {
 	char *value_of_alias;
 
@@ -211,11 +213,14 @@ void parsing_helper(s_shell_t *ptr, size_t i)
  *
  * Return: 127 if the command is not found, else 0.
  */
-int print_command_not_found(s_shell_t *ptr)
+int print_command_not_found(shell_t *ptr)
 {
 	dprintf(STDERR_FILENO, "%s: %lu: %s: not found\n", ptr->program_name,
 			ptr->counter_of_cmd, ptr->sub_command[0]);
 
-	return (CMD_NOT_FOUND); /* Command not found */
+	return (CMD_NOT_FOUND);
+	/*
+	 * Command not found
+	 */
 }
 
