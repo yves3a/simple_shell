@@ -32,3 +32,4 @@ int unalias(alias_t **aliases, char *command);
 char *receive_alias(alias_shell_t *aliases, const char *name);
 int alias_handler(alias_shell_t **aliases, char *cmd_line);
 
+#endif
