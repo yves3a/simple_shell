@@ -1,4 +1,5 @@
-#include "s_shell.h"
+#include "shell.h"
+#include _MAIN_H_
 
 /**
  * shell_init - Allocates and initializes the shell data structure

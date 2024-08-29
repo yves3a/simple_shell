@@ -1,4 +1,5 @@
-#include "s_shell.h"
+#include "shell.h"
+#include "main.h"
 
 /**
  * strn_cmp - Compare at most n bytes of two strings.

@@ -1,4 +1,5 @@
-#include "s_shell.h"
+#include "shell.h"
+#include "main.h"
 
 /**
  * str_tok - tokenizes a string into words using a delimiter.
