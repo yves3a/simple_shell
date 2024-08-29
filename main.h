@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef S_SHELL_H
+#define S_SHELL_H
 
 #include <errno.h>
 #include <fcntl.h>
@@ -38,7 +38,7 @@
 
 /* string handlers */
 
-size_t str_len(const char *s);
+size_t str_len(const char *str);
 char *str_dup(const char *str);
 char *str_chr(const char *str, int c);
 char *str_r_chr(const char *s, int c);
@@ -121,16 +121,16 @@ typedef struct alias
 	struct alias *next;
 } alias_t;
 
-void free_aliases(alias_t **aliases);
-void aliases_printer(const alias_shell_t *aliases);
+void free_aliases(alias_t **head);
+void aliases_printer(const alias_t *aliases);
 int unalias(alias_t **aliases, char *command);
-char *receive_alias(alias_shell_t *aliases, const char *name);
-int alias_handler(alias_shell_t **aliases, char *cmd_line);
+char *receive_alias(alias_t *aliases, const char *name);
+int alias_handler(alias_t **aliases, char *cmd_line);
 int print_alias(const alias_t *aliases, const char *name);
-void parsing_aliases(const char *data, alias_shell_t **aliases);
+void parsing_aliases(const char *data, alias_t **aliases);
 void cmd_alias_builder(char ***sub_cmd, char *value_of_alias);
-alias_shell_t *alias_add(alias_shell_t **aliases, const char *izina, const char *value);
-void non_matching_processor(alias_shell_t *aliases, const char *non_match, int finish);
+alias_t *alias_add(alias_t **aliases, const char *izina, const char *value);
+void non_matching_processor(alias_t *aliases, const char *non_match, int finish);
 
 
 /* shell command context */
@@ -161,7 +161,7 @@ typedef struct shell
 	const char *program_name;
 	size_t counter_of_cmd;
 	int code_exiter;
-} shell_t;
+} s_shell_t;
 
 shell_t *shell_init(void);
 void handle_signalint(int signum);
@@ -172,20 +172,20 @@ int unset_env(const char *name);
 int cd_handler(shell_t *ptr);
 int set_env(const char *name, const char *value, int over_write);
 int builtin_handler(shell_t *ptr);
-int exit_handler(shell_t *ptr, void (*cleanup)(const char *format, ...));
+int exit_handler(s_shell_t *ptr, void (*cleanup)(const char *format, ...));
 
 /* parsers and executors */
 
 char *rec_operator(char *str);
 char *comment_handler(char *cmd);
-int line_parsing(shell_t *ptr);
-int command_executor(const char *pathname, shell_t *ptr);
-int parsing_and_execute(shell_t *ptr, size_t i);
-int handler_of_path(shell_t *ptr);
-int print_command_not_found(shell_t *ptr);
-void file_as_input_handler(const char *filename, shell_t *ptr);
-char **variables_handler(shell_t *ptr);
-int parsing(shell_t *ptr);
-void parsing_helper(shell_t *ptr, size_t index);
+int line_parsing(s_shell_t *ptr);
+int command_executor(const char *pathname, s_shell_t *ptr);
+int parsing_and_execute(s_shell_t *ptr, size_t i);
+int handler_of_path(s_shell_t *ptr);
+int print_command_not_found(s_shell_t *ptr);
+void file_as_input_handler(const char *filename, s_shell_t *ptr);
+char **variables_handler(s_shell_t *ptr);
+int parsing(s_shell_t *ptr);
+void parsing_helper(s_shell_t *ptr, size_t index);
 
 #endif /* SHELL_H */
