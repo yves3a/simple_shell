@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * comment_handler - Processes a command string and removes comments.

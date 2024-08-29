@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * handler_of_path - Executes a command when

@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 static int exit_code;
 
@@ -9,7 +9,7 @@ static int exit_code;
  *
  * Return: 0 on success, -1 on error.
  */
-int alias_handler(alias_shell_t **head, char *cmd)
+int alias_handler(alias_t **head, char *cmd)
 {
 	while (*cmd == ' ')
 		cmd++; /* Remove leading spaces */
@@ -39,7 +39,7 @@ int alias_handler(alias_shell_t **head, char *cmd)
  * Description: Uses regex to extract aliases from input and
  * populates the alias list.
  */
-void parsing_aliases(const char *data, alias_shell_t **aliases)
+void parsing_aliases(const char *data, alias_t **aliases)
 {
 	regex_t regex;
 	char *data_ptr = NULL;
@@ -91,7 +91,7 @@ void parsing_aliases(const char *data, alias_shell_t **aliases)
  * @non_match: String to check for non-matching patterns.
  * @finish: Signal end; 1 for full string, 0 for word-by-word.
  */
-void non_matching_processor(alias_shell_t *aliases, const char *non_match, int finish)
+void non_matching_processor(alias_t *aliases, const char *non_match, int finish)
 {
 	char *part, *copy;
 

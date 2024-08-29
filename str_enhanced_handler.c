@@ -1,4 +1,3 @@
-#include "shell.h"
 #include "main.h"
 
 /**
@@ -159,4 +158,3 @@ char *strn_cpy(char *dest, const char *src, size_t n)
 
 	return (dest);
 }
-

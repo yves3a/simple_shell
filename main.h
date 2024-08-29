@@ -1,6 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+/* Environment variables and PATH handlers */
+extern char **environ;
+
+
 #include <errno.h>
 #include <fcntl.h>
 #include <regex.h>
@@ -36,9 +40,9 @@
 #define issign(c) ((c) == '-' || (c) == '+')
 #define isquote(c) ((c) == '"' || (c) == '\'')
 
-/* string handlers */
+/*  handlers trings */
 
-size_t str_len(const char *s);
+size_t str_len(const char *str);
 char *str_dup(const char *str);
 char *str_chr(const char *str, int c);
 char *str_r_chr(const char *s, int c);
@@ -55,37 +59,33 @@ int strn_cmp(const char *str1, const char *str2, size_t n);
 int get_count_word(const char *str, const char *delim);
 char *str_str(const char *str, const char *sub_str);
 
-/* numbers */
+/* Handle numbers */
 
 int _atoi(const char *str);
 void _itoa(size_t n, char *str);
 void _reverse(char *buff, size_t len);
 
-/* memory handlers */
+/* handle memory */
 
 void str_free(char ***str_array);
 char *new_ijambo(const char *str, int start, int end);
 void *_realloc(void *old_mem_blk, size_t old_size, size_t new_size);
 char *_memcpy(char *dest, char *src, unsigned int n)
-/* a safer way to deallocate dynamic memory */
+/* a safely way of deallocating dynamic memory */
 void _free(void **ptr);
 #define free_safely(ptr) _free((void **)&(ptr)) /* _free's frontend */
 
-/* frees memory for a variable number of objects */
+/* Frees memory for a variable number of objects based on format specifier */
 void free_multipler(const char *format, ...);
 
-/* a custom implementation of the getline function */
+/* Custom implementation of getline to read input from a file descriptor */
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 
-/* shows the prompt in interactive mode */
+/* Displays the shell prompt in interactive mode */
 void prompt_shower(void);
 
-/* retrieves the hostname from the '/etc/hostname' file */
+/* Retrieves the hostname from the '/etc/hostname' file */
 char *get_hostname(char *buffer);
-
-/* environment and PATH handlers */
-
-extern char **environ;
 
 /**
  * struct _path - builds a linked list of the PATH variable in an environment
@@ -97,14 +97,14 @@ extern char **environ;
 typedef struct _path
 {
 	char *pathname;
-	struct _path.file *next;
+	struct _path *next;
 } path_t;
 
 void env_print(void);
 void print_path(path_t *list);
-void free_list(path_shell_t **head);
+void free_list(path_t **head);
 char *get_env(const char *name);
-path.file_t *path_builder(path.file_t **head);
+path_t *path_builder(path_t **head);
 
 /* aliases */
 
@@ -116,43 +116,42 @@ path.file_t *path_builder(path.file_t **head);
  */
 typedef struct alias
 {
-	char *name;
-	char *value;
-	struct alias *next;
+    char *name;
+    char *value;
+    struct alias *next;
 } alias_t;
 
-void free_aliases(alias_t **aliases);
-void aliases_printer(const alias_shell_t *aliases);
+void free_aliases(alias_t **head);
+void aliases_printer(const alias_t *aliases);
 int unalias(alias_t **aliases, char *command);
-char *receive_alias(alias_shell_t *aliases, const char *name);
-int alias_handler(alias_shell_t **aliases, char *cmd_line);
+char *receive_alias(alias_t *aliases, const char *name);
+int alias_handler(alias_t **aliases, char *cmd_line);
 int print_alias(const alias_t *aliases, const char *name);
-void parsing_aliases(const char *data, alias_shell_t **aliases);
+void parsing_aliases(const char *data, alias_t **aliases);
 void cmd_alias_builder(char ***sub_cmd, char *value_of_alias);
-alias_shell_t *alias_add(alias_shell_t **aliases, const char *izina, const char *value);
-void non_matching_processor(alias_shell_t *aliases, const char *non_match, int finish);
+alias_t *alias_add(alias_t **aliases, const char *izina, const char *value);
+void non_matching_processor(alias_t *aliases, const char *non_match, int finish);
 
 
-/* shell command context */
+/* Shell command context */
 
 /**
- * struct shell - a blueprint for the shell
- * @aliases: a list of aliases
- * @path_list: a list of the PATH directories
- * @line: the command string provided by the user
- * @commands: the inital tokenized commands (splits on semi-colons & newlines)
- * @sub_command: the tokenized version of each command in the commands array
- * @prog_name: the name of we are running
- * @cmd_count: the number of times a command has been executed since the shell
- * started.
- * @tokens: stores multiple tokens before they are further processed
- * @token: a single token
- * @exit_code: the exit code of the last executed program
+ * struct shell - Represents the shell's state and environment
+ * @aliases: List of command aliases
+ * @listof_path: List of directories in the PATH environment variable
+ * @line: Command string entered by the user
+ * @commands: Array of commands tokenized by semi-colons and newlines
+ * @sub_command: Array of tokenized components for each command
+ * @tokens: Array of tokens for further processing
+ * @token: Single token from the commands
+ * @program_name: Name of the program being executed
+ * @counter_of_cmd: Number of commands executed since the shell started
+ * @code_exiter: Exit code of the last executed program
  */
 typedef struct shell
 {
-	alias_shell_t *aliases;
-	path_file_t *listof_path;
+	alias_t *aliases;
+	path_t *listof_path;
 	char *line;
 	char **commands;
 	char **sub_command;
@@ -166,7 +165,7 @@ typedef struct shell
 shell_t *shell_init(void);
 void handle_signalint(int signum);
 
-/* builtin handlers */
+/* They handle builtins functions */
 
 int unset_env(const char *name);
 int cd_handler(shell_t *ptr);
@@ -188,4 +187,4 @@ char **variables_handler(shell_t *ptr);
 int parsing(shell_t *ptr);
 void parsing_helper(shell_t *ptr, size_t index);
 
-#endif /* SHELL_H */
+#endif /* MAIN_H */

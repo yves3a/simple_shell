@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * main -Entry point for the shell program

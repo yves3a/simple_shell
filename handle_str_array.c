@@ -1,4 +1,4 @@
-#include "s_shell.h"
+#include "main.h"
 
 /**
  * dup_str_array - Duplicates the array of strings.
