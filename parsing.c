@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * line_parsing - Parses the received command line.

@@ -1,6 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+/* Environment variables and PATH handlers */
+extern char **environ;
+
+
 #include <errno.h>
 #include <fcntl.h>
 #include <regex.h>
@@ -67,7 +71,7 @@ void str_free(char ***str_array);
 char *new_ijambo(const char *str, int start, int end);
 void *_realloc(void *old_mem_blk, size_t old_size, size_t new_size);
 char *_memcpy(char *dest, char *src, unsigned int n)
-/*  a safely way of deallocating dynamic memory */
+/* a safely way of deallocating dynamic memory */
 void _free(void **ptr);
 #define free_safely(ptr) _free((void **)&(ptr)) /* _free's frontend */
 
@@ -82,9 +86,6 @@ void prompt_shower(void);
 
 /* Retrieves the hostname from the '/etc/hostname' file */
 char *get_hostname(char *buffer);
-
-/* Environment variables and PATH handlers */
-extern char **environ;
 
 /**
  * struct _path - builds a linked list of the PATH variable in an environment
@@ -115,9 +116,9 @@ path_t *path_builder(path_t **head);
  */
 typedef struct alias
 {
-	char *name;
-	char *value;
-	struct alias *next;
+    char *name;
+    char *value;
+    struct alias *next;
 } alias_t;
 
 void free_aliases(alias_t **head);
