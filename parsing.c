@@ -220,7 +220,6 @@ int print_command_not_found(shell_t *ptr)
 
 	return (CMD_NOT_FOUND);
 	/*
-	 * Command not found
+	 * Commands not found
 	 */
-}
 
