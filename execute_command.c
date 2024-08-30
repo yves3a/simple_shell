@@ -10,7 +10,7 @@
 
 int command_executor(const char *pathname, shell_t *ptr)
 {
-	int stat;
+	int ;
 	pid_t pid;
 
 	pid = fork();
