@@ -7,6 +7,7 @@
  *
  * Return: 0 on success, -1 on failure
  */
+
 int command_executor(const char *pathname, shell_t *ptr)
 {
 	int stat;

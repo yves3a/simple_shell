@@ -18,14 +18,14 @@ int line_parsing(shell_t *ptr)
 	size_t index;
 
 	/* Skip empty lines or lines starting with a comment */
-	if (*ptr->line == '\n' || *ptrline == '#')
+	if (*ptr->line == '\n' || *ptr->line == '#')
 		return (0);
 
 	/* Remove comments from the command line */
 	ptr->line = comment_handler(ptr->line);
 
 	/* Tokenize the command line */
-	ptr->tokens = str_tok(msh->line, "\n");
+	ptr->tokens = str_tok(ptr->line, "\n");
 	if (ptr->tokens == NULL)
 	{
 		fprintf(stderr, "Not enough system memory to continue\n");
@@ -81,17 +81,17 @@ int parsing(shell_t *ptr)
 		oper = rec_operator(ptr->commands[index]);
 		if (oper != NULL)
 		{
-	set_off = str_spn(ptr->commands[index], oper);
-	/* Extract the command before the operator */
-	cur_cmd = strn_dup(ptr->commands[index], set_off);
+			set_off = str_spn(ptr->commands[index], oper);
+			/* Extract the command before the operator */
+			cur_cmd = strndup(ptr->commands[index], set_off);
 			if (cur_cmd == NULL)
 				return (0);
 			ptr->sub_command = str_tok(cur_cmd, NULL);
 			free_safely(cur_cmd);
 			if (ptr->sub_command == NULL)
 				return (0);
-		ptr->sub_command = variables_handler(ptr);
-		parsing_helper(ptr, index);
+			ptr->sub_command = variables_handler(ptr);
+			parsing_helper(ptr, index);
 
 			/* Prepare the next command after the operator */
 			next_cmd_temp = str_dup(&ptr->commands[index][set_off + 2]);
@@ -100,7 +100,7 @@ int parsing(shell_t *ptr)
 
 			/* Check the exit code and determine the next command to execute */
 			if ((!str_cmp(oper, "&&") && ptr->code_exiter == 0) ||
-				(!str_cmp(oper, "||") && ptr->code_exiter != 0))
+					(!str_cmp(oper, "||") && ptr->code_exiter != 0))
 			{
 				ptr->commands[index] = cmd_next;
 				parsing(ptr);
@@ -143,7 +143,7 @@ int parsing_and_execute(shell_t *ptr, size_t i)
 		str_free(&ptr->sub_command);
 
 	/* Cleanup and return the exit code */
-	free_safely(ptr->commands[]);
+	free_safely(ptr->commands[i]);
 	return (ptr->code_exiter);
 }
 
@@ -162,7 +162,7 @@ void parsing_helper(shell_t *ptr, size_t i)
 
 	/* Handle alias and unalias commands */
 	if (!str_cmp(ptr->sub_command[0], "alias") ||
-		!str_cmp(ptr->sub_command[0], "unalias"))
+			!str_cmp(ptr->sub_command[0], "unalias"))
 	{
 		ptr->code_exiter = alias_handler(&ptr->aliases, ptr->commands[i]);
 		str_free(&ptr->sub_command);
@@ -196,7 +196,7 @@ void parsing_helper(shell_t *ptr, size_t i)
 	{
 		/* Handle commands with absolute or relative paths */
 		if (access(ptr->sub_command[0], X_OK) == 0 &&
-			str_chr(ptr->sub_command[0], '/'))
+				str_chr(ptr->sub_command[0], '/'))
 			ptr->code_exiter = command_executor(ptr->sub_command[0], ptr);
 		else
 			ptr->code_exiter = print_command_not_found(ptr);

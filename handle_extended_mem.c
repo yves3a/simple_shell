@@ -51,14 +51,14 @@ void free_aliases(alias_t **head)
  * 'a' - alias_t list
  */
 
-void free_multipler(const char *format, ...);
+void free_multipler(const char *format, ...)
 {
 	va_list lists;
 	char *l;
 
 	va_start(lists, format);
 
-	while (; *format != '\0'; format++)
+	for (; *format != '\0'; format++)
 	{
 		switch (*format)
 		{

@@ -1,6 +1,6 @@
 #include "main.h"
 
-static int exit_code;
+static int code_exiter;
 
 /**
  * alias_handler - Processes alias commands.
@@ -30,7 +30,6 @@ int alias_handler(alias_t **head, char *cmd)
 
 	return (code_exiter);
 }
-
 /**
  * parsing_aliases - Extracts aliases from input string.
  * @data: Input string containing aliases.
@@ -109,7 +108,7 @@ void non_matching_processor(alias_t *aliases, const char *non_match, int finish)
 			while (part != NULL)
 			{
 				code_exiter = alias_printer(aliases, part);
-				part = strtok(NULL, " ");
+				part = *str_tok(NULL, " ");
 			}
 		}
 		else
@@ -123,7 +122,7 @@ void non_matching_processor(alias_t *aliases, const char *non_match, int finish)
  * @sub_cmd: Pointer to the command array.
  * @value_of_alias: Alias value string.
  */
-void cmd_alias_builder(char ***sub_cmd, char *value_of_alias);
+void cmd_alias_builder(char ***sub_cmd, char *value_of_alias)
 
 {
 	char **copy_array = NULL;

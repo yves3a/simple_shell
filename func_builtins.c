@@ -45,14 +45,14 @@ int set_env(const char *name, const char *val, int over_write)
 		if (strn_cmp(environ[index], name, len) == 0 && environ[index][len] == '=')
 		{
 			environ[index] = var_of_env;
-			safe_free(var_of_env);
+			free_safely(var_of_env);
 			return (0);
 		}
 	}
 	/* Add the new variable to the environment */
 	environ[index++] = var_of_env;
 	environ[index] = NULL;
-	safe_free(var_of_env);
+	free_safely(var_of_env);
 
 	return (0);
 }
@@ -108,7 +108,7 @@ int exit_handler(shell_t *ptr, void (*cleanup)(const char *format, ...))
 	{
 		cleanup("spattt", ptr->line, &ptr->listof_path, &ptr->aliases,
 				&ptr->commands, &ptr->sub_command, &ptr->tokens);
-		safe_free(ptr);
+		free_safely(ptr);
 		exit(code_exitor);
 	}
 
@@ -122,7 +122,7 @@ int exit_handler(shell_t *ptr, void (*cleanup)(const char *format, ...))
 	code_exitor = _atoi(code_status);
 	cleanup("spattt", ptr->line, &ptr->listof_path, &ptr->aliases,
 			&ptr->commands, &ptr->sub_command, &ptr->tokens);
-	safe_free(ptr);
+	free_safely(ptr);
 	exit(code_exitor);
 }
 
@@ -139,13 +139,14 @@ int cd_handler(shell_t *ptr)
 	char *home = get_env("HOME"), *old_path = get_env("OLDPWD");
 
 	getcwd(print_work_dir, BUFF_SIZE);
-	oldpath = (old_path) ? old_path : print_work_dir;
+	old_path = (old_path) ? old_path : print_work_dir;
 	if (name_of_path != NULL && *name_of_path != '~')
 	{
 		int d_dash = !str_cmp(name_of_path, "-") || !str_cmp(name_of_path, "--");
 
 		if (!str_chr(name_of_path, '/') && !d_dash)
-			sprintf(path, "%s/%s", print_work_dir, ((d_dash) ? old_path : name_of_path));
+			sprintf(path, "%s/%s", print_work_dir,
+				((d_dash) ? old_path : name_of_path));
 		else
 			sprintf(path, "%s", ((d_dash) ? old_path : name_of_path));
 		if (chdir(path) == -1)
@@ -162,7 +163,7 @@ int cd_handler(shell_t *ptr)
 			printf("%s\n", old_path);
 		set_env("OLDPWD", print_work_dir, 1);
 		getcwd(path, PATH_SIZE);
-		set_env("PWD", path, 1);
+		set_env("PWD", path, 1);;
 	}
 	else
 	{
@@ -189,7 +190,7 @@ void env_print(void)
 	pid_t child;
 
 	/* opens a file for read,write, create and trunc mode*/
-	file_d = open(name_file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	file_d = open(name_of_file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (file_d == -1)
 		return;
 

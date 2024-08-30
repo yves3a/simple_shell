@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 
 /**
  * get_env - Retrieves the value of an environment variable.
@@ -14,10 +14,10 @@ char *get_env(const char *name)
 	for (index = 0; environ[index] != NULL; index++)
 	{
 		/* Check for a matching variable */
-		if (_strstr(environ[index], name) && environ[index][len] == '=')
+		if (str_str(environ[index], name) && environ[index][len] == '=')
 		{
 			/* Return the value after '=' */
-			return ((_strchr(environ[index], '=')) + 1);
+			return ((str_chr(environ[index], '=')) + 1);
 		}
 	}
 
@@ -30,23 +30,23 @@ char *get_env(const char *name)
  *
  * Return: Pointer to the head on success, or NULL on failure.
  */
-path_file_t *path_builder(path.file_t **head);
+path_t *path_builder(path_t **head)
 {
 	size_t index = 0;
 	char *value_of_path = NULL, **names_of_path = NULL;
 
-	path_file_t *new_node = NULL, *tail = NULL;
+	path_t *new_node = NULL, *tail = NULL;
 
 	value_of_path = get_env("PATH");
 	if (value_of_path == NULL || *value_of_path == '\0')
 		return (NULL); /* PATH is not set */
 
-	names_of_path = _strtok(value_of_path, ":");
+	names_of_path = str_tok(value_of_path, ":");
 	if (names_of_path == NULL)
 		return (NULL); /* Couldn't tokenize PATH */
 	while (names_of_path[index] != NULL)
 	{
-		new_node = malloc(sizeof(path.file_t));
+		new_node = malloc(sizeof(path_t));
 		if (new_node == NULL)
 			return (NULL);
 
@@ -67,11 +67,11 @@ path_file_t *path_builder(path.file_t **head);
 			tail->next = new_node;
 		}
 		/* Free memory for the token */
-		safe_free(names_of_path[index]);
+		free_safely(names_of_path[index]);
 		index++;
 	}
 
-	free_str(&names_of_path);
+	str_free(&names_of_path);
 	return (*head);
 }
 
@@ -79,7 +79,7 @@ path_file_t *path_builder(path.file_t **head);
  * path_printer - Prints the directories in the PATH list.
  * @list: list of pathnames
  */
-void path_printer(path.file_t *list)
+void path_printer(path_t *list)
 {
 	if (list == NULL)
 		return;

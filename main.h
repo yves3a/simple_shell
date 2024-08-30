@@ -70,7 +70,7 @@ void _reverse(char *buff, size_t len);
 void str_free(char ***str_array);
 char *new_ijambo(const char *str, int start, int end);
 void *_realloc(void *old_mem_blk, size_t old_size, size_t new_size);
-char *_memcpy(char *dest, char *src, unsigned int n)
+void *_memcpy(void *dest, const void *src, size_t n);
 /* a safely way of deallocating dynamic memory */
 void _free(void **ptr);
 #define free_safely(ptr) _free((void **)&(ptr)) /* _free's frontend */
@@ -122,16 +122,15 @@ typedef struct alias
 } alias_t;
 
 void free_aliases(alias_t **head);
-void aliases_printer(const alias_t *aliases);
+void aliases_printer(const alias_t *ali);
 int unalias(alias_t **aliases, char *command);
 char *receive_alias(alias_t *aliases, const char *name);
 int alias_handler(alias_t **aliases, char *cmd_line);
-int print_alias(const alias_t *aliases, const char *name);
+int alias_printer(const alias_t *ali, const char *name);
 void parsing_aliases(const char *data, alias_t **aliases);
 void cmd_alias_builder(char ***sub_cmd, char *value_of_alias);
 alias_t *alias_add(alias_t **aliases, const char *izina, const char *value);
 void non_matching_processor(alias_t *aliases, const char *non_match, int finish);
-
 
 /* Shell command context */
 

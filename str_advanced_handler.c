@@ -23,7 +23,7 @@ char **str_tok(const char *str, const char *delim)
 		return (NULL); /* No valid words found */
 
 	array_of_str = malloc((count_word + 1) * sizeof(char *));
-	if (array_str == NULL)
+	if (array_of_str == NULL)
 		return (NULL); /* Memory allocation failed */
 
 	starting_word = index = 0;

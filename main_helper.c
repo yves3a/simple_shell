@@ -42,7 +42,7 @@ shell_t *shell_init(void)
  */
 char *return_hostname(char *buffer)
 {
-	int file_descr, n_read;
+	int file_descr, num_read;
 
 	file_descr = open("/etc/hostname", O_RDONLY);
 
@@ -50,7 +50,7 @@ char *return_hostname(char *buffer)
 	if (file_descr == -1)
 	{
 		/* If opening failed, use 'ptr' as the default hostname */
-		_strcpy(buffer, "ptr");
+		str_cpy(buffer, "ptr");
 		return (buffer);
 	}
 
@@ -59,7 +59,7 @@ char *return_hostname(char *buffer)
 
 	/*Check if reading failed or no data was read, fall back to 'msh' if needed*/
 	if (num_read == -1 || num_read == 0)
-		_strcpy(buffer, "ptr");
+		str_cpy(buffer, "ptr");
 	else
 	/* Successfully read the hostname, remove the trailing newline */
 		buffer[num_read - 1] = '\0';
@@ -89,7 +89,7 @@ void prompt_shower(void)
 		/* Format the prompt with username, hostname, and current directory */
 			sprintf(prompt, "[%s@%s %s]%% ", name_of_user,
 				return_hostname(name_of_host),
-				(!_strcmp(pwd, name_of_user))
+				(!str_cmp(pwd, name_of_user))
 						? "~" /* Display '~' for the user's home directory */
 						: pwd);
 		}

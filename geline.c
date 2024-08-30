@@ -23,7 +23,7 @@ ssize_t _getline(char **line_ptr, size_t *n, int fd)
 	num_read = t_read = 0;
 	for (; (num_read = read(fd, *line_ptr + t_read, BUFF_SIZE)) > 0;)
 	{
-		to_read += num_read;
+		t_read += num_read;
 		/* Resize buffer if needed */
 		if (t_read >= buff_size)
 		{
