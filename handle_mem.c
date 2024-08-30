@@ -2,7 +2,7 @@
 
 /**
  * _realloc - reallocate dynamic memory
- * @old_mem_blk: pointer to the old memory block
+ * @old_block: pointer to the old memory block
  * @old_size: size of the old memory block
  * @new_size: size of the new memory block
  *
@@ -54,17 +54,20 @@ void *_realloc(void *old_block, size_t old_size, size_t new_size)
  *
  * Return: pointer to dest.
  */
-char *_memcpy(char *dest, char *src, unsigned int n)
+void *_memcpy(void *dest, const void *src, size_t n)
 {
-	unsigned int i;
+	size_t i;
+
+	char *t_dest = (char *)dest;
+	const char *t_src = (const char *)src;
 
 	for (i = 0; i < n; i++)
 	{
-		dest[i] = src[i];
+		t_dest[i] = t_src[i];
 	}
+
 	return (dest);
 }
-
 /**
  * new_word - gets a word a from string and writes it to a memory buffer
  * @str: string to copy from
@@ -73,21 +76,21 @@ char *_memcpy(char *dest, char *src, unsigned int n)
  *
  * Return: a pointer to the new word
  */
-char *new_word(const char *str, int start, int end)
+char *new_ijambo(const char *str, int start, int end)
 {
-	char *new_word;
-	int word_len = end - start;
+	char *new_jambo;
+	int w_len = end - start;
 
-	new_word = malloc(sizeof(char) * (word_len + 1));
-	if (new_word == NULL)
+	new_jambo = malloc(sizeof(char) * (w_len + 1));
+	if (new_jambo == NULL)
 	{
 		return (NULL); /* memory allocation failed */
 	}
 
-	_strncpy(new_word, str + start, word_len);
-	new_word[word_len] = '\0';
+	strn_cpy(new_jambo, str + start, w_len);
+	new_jambo[w_len] = '\0';
 
-	return (new_word);
+	return (new_jambo);
 }
 
 /**
@@ -113,7 +116,7 @@ void _free(void **ptr)
  * free_str - frees memory allocated for an array of strings
  * @str_array: string array
  */
-void free_str(char ***str_array)
+void str_free(char ***str_array)
 {
 	int i = 0;
 
@@ -123,9 +126,9 @@ void free_str(char ***str_array)
 	/* free memory allocated for each string */
 	for (i = 0; (*str_array)[i] != NULL; i++)
 	{
-		safe_free((*str_array)[i]);
+		free_safely((*str_array)[i]);
 	}
 
 	if ((*str_array) != NULL)
-		safe_free((*str_array));
+		free_safely((*str_array));
 }

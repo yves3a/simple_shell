@@ -10,10 +10,10 @@
  *	otherwise -1 if the command is not found in the PATH.
  */
 
-int handler_of_path(shell_t *ptr);
+int handler_of_path(shell_t *ptr)
 {
 	char path[BUFF_SIZE];
-	path_shell_t *listof_path = ptr->listof_path;
+	path_t *listof_path = ptr->listof_path;
 
 	while (listof_path != NULL)
 	{
@@ -41,7 +41,7 @@ int handler_of_path(shell_t *ptr);
  * Return: 0 on success, or the exit status of the last executed process.
  */
 
-void file_as_input_handler(const char *filename, shell_t *ptr);
+void file_as_input_handler(const char *filename, shell_t *ptr)
 {
 	size_t num = 0;
 	int num_read, fd;
@@ -69,7 +69,7 @@ void file_as_input_handler(const char *filename, shell_t *ptr);
 		exit_handler(ptr, free_multipler);
 	}
 
-	if (n_read)
+	if (num_read)
 	{
 		ptr->program_name = filename;
 		line_parsing(ptr);

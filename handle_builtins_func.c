@@ -1,5 +1,7 @@
+#include "main.h"
+
 /**
- * builtin_func_handler - Handles the built-in commands.
+ * builtin_handler - Handles the built-in commands.
  * @ptr: Contains all the data relevant to the shell's operation.
  *
  * Description: This function checks the first element of the sub_command array
@@ -8,7 +10,7 @@
  *
  * Return: Exit code for the command executed or NOT_BUILTIN if not a built-in.
  */
-int builtin_func_handler(shell_t *ptr)
+int builtin_handler(shell_t *ptr)
 {
 	if (!str_cmp(ptr->sub_command[0], "env") ||
 		!str_cmp(ptr->sub_command[0], "printenv"))

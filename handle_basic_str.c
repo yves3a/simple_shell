@@ -8,11 +8,13 @@
  * Return: 0 if equal, negative if s1 < s2, positive if s1 > s2
  */
 int str_cmp(const char *s1, const char *s2)
-
+{
 	while (*s1 == *s2)
 	{
 		if (*s1 == '\0')
+		{
 			return (0);
+		}
 		s1++;
 		s2++;
 	}
@@ -26,6 +28,7 @@ int str_cmp(const char *s1, const char *s2)
  *
  * Return: pointer to the resulting string dest
  */
+
 char *str_cat(char *dest, const char *src)
 {
 	int leng, index;
@@ -62,7 +65,7 @@ char *str_cpy(char *dest, const char *src)
 
 /**
  * str_len - gets the string lenght
- * @s: a string
+ * @str: a string
  *
  * Return: length of the string
  */

@@ -64,7 +64,7 @@ exit_handler(ptr, free_multipler);
  * execute the command
  */
 ptr->code_exiter = line_parsing(ptr);
-safe_free(ptr->line);
+free_safely(ptr->line);
 /*Free the memory allocated for the inputs*/
 }
 /* Returns the exit code from the lasts executed commands */

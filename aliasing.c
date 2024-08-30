@@ -69,8 +69,8 @@ void aliases_printer(const alias_t *ali)
 
 /**
  * unalias - removes an alias from the list
- * @aliases: pointer to the list of aliases
- * @command: array of aliases to remove
+ * @ali: pointer to the list of aliases
+ * @cmd: array of aliases to remove
  *
  * Return: 0 if alias was found and removed, else 1
  */
@@ -112,15 +112,15 @@ int unalias(alias_t **ali, char *cmd)
 			code_exit = 1;
 		}
 		free_safely(names[i]);
-		**i++;**
+		i++;
 	}
 	str_free(&names);
 	return (code_exit);
 }
 
 /**
- * print_alias - prints a specific alias based on the name given
- * @aliases: list of aliases
+ * alias_printer - prints a specific alias based on the name given
+ * @ali: list of aliases
  * @name: alias name to print
  *
  * Return: 0 if alias was found, else 1
@@ -147,8 +147,8 @@ int alias_printer(const alias_t *ali, const char *name)
 }
 
 /**
- * get_alias - returns the value of an alias
- * @aliases: list of aliases
+ * receive_alias - returns the value of an alias
+ * @ali: list of aliases
  * @name: alias name
  *
  * Return: alias value, or NULL if not found

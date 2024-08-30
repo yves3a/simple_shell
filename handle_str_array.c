@@ -7,7 +7,7 @@
  * Return: Pointer to the newly allocated duplicate array on success,
  *         or NULL if memory allocation fails.
  */
-char **dup_str_array(char **og);
+char **dup_str_array(char **og)
 {
 	size_t size, index;
 	char **dup;
