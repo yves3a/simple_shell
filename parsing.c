@@ -209,7 +209,7 @@ void parsing_helper(shell_t *ptr, size_t i)
  * @ptr: Contains all the data relevant to the shell's operation.
  *
  * Description: This function prints a "command not found" error message to
- * the standard error stream.
+ * the standard errors tream.
  *
  * Return: 127 if the command is not found, else 0.
  */
@@ -222,4 +222,4 @@ int print_command_not_found(shell_t *ptr)
 	/*
 	 * Commands not found
 	 */
-
+}
