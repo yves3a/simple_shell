@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
 	/**
 	 * If a file is passed as an argument, treat it as input
-	 * and execute commands from it
+	 * and execute commands from itself
 	 */
 	if (argc >= 2)
 	{
